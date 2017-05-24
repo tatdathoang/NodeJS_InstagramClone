@@ -1,3 +1,4 @@
 body { background:#fafafa; }
 
-.feed-block { background: #fff; }
+.feed-block { background:#fff; display:block; margin:0 auto; width:600px }
+.feed-image { display:block; float:left; } 
