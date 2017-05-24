@@ -1,4 +1,19 @@
+.center-block { float:none !important; }
+
 body { background:#fafafa; }
 
-.feed-block { background:#fff; display:block; margin:0 auto; width:600px }
+.feed-block { background:#fff; display:block; margin:0 auto; overflow:hidden; float: none !important; border-radius:3px; border:1px solid #e6e6e6; }
+
+.feed-header { padding:14px 20px; height:64px; box-sizing: border-box;
+    display: -ms-flexbox; display: -webkit-flex; display: flex;
+    -webkit-flex-direction: row; -ms-flex-direction: row; flex-direction: row;
+    -webkit-flex-wrap: nowrap; -ms-flex-wrap: nowrap; flex-wrap: nowrap;
+    -webkit-justify-content: flex-start; -ms-flex-pack: start; justify-content: flex-start;
+    -webkit-align-content: stretch; -ms-flex-line-pack: stretch; align-content: stretch;
+    -webkit-align-items: center;-ms-flex-align: center; align-items: center;
+}
+
+.feed-avatar { display: block;  font-size:14px; font-weight:600; color:#262626; }
+.feed-avatar-image.small { width:30px; height:30px; border-radius:50%; margin-right:10px; }
+
 .feed-image { display:block; float:left; } 
