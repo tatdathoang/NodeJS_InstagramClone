@@ -1,3 +1,24 @@
-body { background:#fafafa; }
+body { background-color: #fafafa; }
 
 .feed-block { background: #fff; }
+
+.topmenu{
+    background-color:red;
+    margin-top: 10px;
+}
+.logolink{
+    text-decoration: none;    
+    font-size: medium;
+    width: 150px;
+    height: 50px;
+    
+}
+
+.searchbtn{
+    width: 50%;
+    height:50%;
+}
+
+.rightmennu{
+    margin-left:50px;    
+}
