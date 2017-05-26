@@ -3,24 +3,50 @@
 body { background:#fafafa; }
 
 .topmenu{
-    background-color:red;
-    margin-top: 10px;
+    background-color:grey;
+    padding-top: 10px;
+    /* The line height will help to make things align in the middle of the vertical axis */
+    line-height: 86px;
 }
 .logolink{
-    text-decoration: none;    
     font-size: medium;
-    width: 150px;
+    display:block;
+    float:left;
+}
+
+.logolink:hover {
+    text-decoration: none;
+}
+
+.logoicon {
+    color:#000;
+    vertical-align: middle;
+    border-right: 1px solid black;
+    padding-right:10px;
+}
+
+.logotext {
+     width: 150px;
     height: 50px;
-    
+    margin: 10px 0 0 10px;
 }
 
 .searchbtn{
-    width: 50%;
-    height:50%;
+    width: 215px;
+    margin-left:20%;
 }
 
-.rightmennu{
-    margin-left:50px;    
+.rightmenu{
+    /* But the float will stop the icons from doing that. If you want to make things align to the middle, is better to remove the float and force the icons
+    go to the right using margins.
+    */
+    margin-left:50px;
+    color:black;
+    
+    /*float:right;*/
+}
+.rightmenu:hover {
+    text-decoration: none;
 }
 
 .feed-block { background:#fff; display:block; margin:0 auto 60px; overflow:hidden; float: none !important; border-radius:3px; border:1px solid #e6e6e6; }
