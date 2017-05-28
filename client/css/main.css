@@ -3,10 +3,11 @@
 body { background:#fafafa; }
 
 .topmenu{
-    background-color:grey;
-    padding-top: 10px;
+    background-color:white;
     /* The line height will help to make things align in the middle of the vertical axis */
-    line-height: 86px;
+    line-height: 76px;
+    /*padding-bottom:30px;*/
+    margin-bottom: 30px;
 }
 .logolink{
     font-size: medium;
@@ -22,7 +23,8 @@ body { background:#fafafa; }
     color:#000;
     vertical-align: middle;
     border-right: 1px solid black;
-    padding-right:10px;
+    padding-right:17px;
+    margin-top: 2px;
 }
 
 .logotext {
@@ -47,6 +49,7 @@ body { background:#fafafa; }
 }
 .rightmenu:hover {
     text-decoration: none;
+    color:black;
 }
 
 .feed-block { background:#fff; display:block; margin:0 auto 60px; overflow:hidden; float: none !important; border-radius:3px; border:1px solid #e6e6e6; }
