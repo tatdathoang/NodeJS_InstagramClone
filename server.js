@@ -1,82 +1,73 @@
-//
-// # SimpleServer
-//
-// A simple chat server using Socket.IO, Express, and Async.
-//
+
 var http = require('http');
 var path = require('path');
-
-var async = require('async');
-var socketio = require('socket.io');
 var express = require('express');
+var mongoose = require('mongoose');
 
-//
-// ## SimpleServer `SimpleServer(obj)`
-//
-// Creates a new instance of SimpleServer with the following options:
-//  * `port` - The HTTP port to listen on. If `process.env.PORT` is set, _it overrides this value_.
-//
+var Post = require('./models/Post.js');
+var Comment = require('./models/Comment.js');
+var Hashtag = require('./models/Hashtag.js');
+var User = require('./models/User.js');
+
 var router = express();
 var server = http.createServer(router);
-var io = socketio.listen(server);
 
+
+
+//establish connection to our mongodb instance
+mongoose.connect('mongodb://admin:admin@ds021182.mlab.com:21182/instagram_assignment');
+
+//tell the router (ie. express) where to find static files
 router.use(express.static(path.resolve(__dirname, 'client')));
-var messages = [];
-var sockets = [];
+//tell the router to parse JSON data for us and put it into req.body
+router.use(express.bodyParser());
 
-io.on('connection', function (socket) {
-    messages.forEach(function (data) {
-      socket.emit('message', data);
-    });
+//tell the router how to handle a get request to the root 
+router.get('/', function(req, res)
+{
+  console.log('client requests index.html');
+  //use sendfile to send our index.html file
+  res.sendfile(path.join(__dirname, 'client/view','index.html'));
+});
 
-    sockets.push(socket);
 
-    socket.on('disconnect', function () {
-      sockets.splice(sockets.indexOf(socket), 1);
-      updateRoster();
-    });
+//tell the router how to handle a post request to find all post
+router.post('/GetAllPosts', function(req, res){
+  //print the log
+  console.log('Client requests all posts');
+  
+  //go find all the posts in the database
+  Post.find({})
+  .then(function(paths){
+    //send them to the client in JSON format
+    res.json(paths);
+  })
+});
 
-    socket.on('message', function (msg) {
-      var text = String(msg || '');
+  
+//tell the router how to handle a post request to find all comment
+router.post('/GetAllComments', function(req, res){
+  //print the log
+  console.log('Find all comments of post ' + req.body.id);
+  
+  //go find all the comments of the post
+  Comment.findById(req.body.id)
+  .then(function(paths){
+    //send them to the client in JSON format
+    res.json(paths);
+  })
+});
+  
+//tell the router how to handle a post request to /incrLike
+router.post('/incrLike', function(req, res){
+  console.log('increment like for ' + req.body.id);
+  //the client will send us the ID for the post for which we should increment the like
+  //this will be in req.body.id
+  //so far, we are just going to respond with a count of 1
+  //we don't have to send back the ID, but it will make the client side code easier
+  res.json({id: req.body.id, count: 1});  
+});
 
-      if (!text)
-        return;
-
-      socket.get('name', function (err, name) {
-        var data = {
-          name: name,
-          text: text
-        };
-
-        broadcast('message', data);
-        messages.push(data);
-      });
-    });
-
-    socket.on('identify', function (name) {
-      socket.set('name', String(name || 'Anonymous'), function (err) {
-        updateRoster();
-      });
-    });
-  });
-
-function updateRoster() {
-  async.map(
-    sockets,
-    function (socket, callback) {
-      socket.get('name', callback);
-    },
-    function (err, names) {
-      broadcast('roster', names);
-    }
-  );
-}
-
-function broadcast(event, data) {
-  sockets.forEach(function (socket) {
-    socket.emit(event, data);
-  });
-}
 
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
   var addr = server.address();
