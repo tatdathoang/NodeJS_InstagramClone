@@ -19,8 +19,8 @@ function onload(){
             .then(function(){
                 //jQuery function to request all the posts from the server
                 //the 'return' is required. Otherwise, the subsequent then will not wait for this to complete
-                console.log(post._id)
-                return ($.post('GetAllComments',post._id));
+                //console.log(post._id)
+                return ($.post('GetAllComments',{id : post._id}));
             })
             //when the server responds, we'll execute this code
             .then(function(posts){

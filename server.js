@@ -50,11 +50,19 @@ router.post('/GetAllComments', function(req, res){
   //print the log
   console.log('Find all comments of post ' + req.body.id);
   
+  var commentsArray = {};
+
+   
   //go find all the comments of the post
-  Comment.findById(req.body.id)
+  Comment.find({postID:req.body.id})
   .then(function(paths){
+     paths.forEach(function(comment) {
+      console.log('path is ' + paths);
     //send them to the client in JSON format
     res.json(paths);
+    });
+
+    
   })
 });
   
