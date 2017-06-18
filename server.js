@@ -68,8 +68,10 @@ router.post('/GetAllHashtag', function(req, res){
   //go find all the hashtags of the post
   Hashtag.find({postID:req.body.id})
   .then(function(paths){
+    paths.forEach(function(hashtag) {
     //send them to the client in JSON format
     res.json(paths);
+    });
   })
 });
     
