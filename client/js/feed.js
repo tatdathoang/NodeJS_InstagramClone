@@ -1,4 +1,22 @@
 //onLoad function, to be executed when page is completed loaded by browser
+function likeClick(id){
+  Promise.resolve()
+  .then(function(){
+      //jQuery provides a nice convenience method for easily sending a post with parameters in JSON
+      //here we pass the ID to the incrLike route on the server side so it can do the incrementing for us
+      //note the return. This MUST be here, or the subsequent then will not wait for this to complete
+      return $.post('incrLike', {id : id});
+  })
+  .then(function(like){
+      //jQuery provides a nice convenience methot for easily setting the count to the value returned
+      $('#like' + like.id).html(like.count);
+  })
+  .catch(function(err){
+      //always include a catch for the promise chain
+      console.log(err);
+  });
+}
+            
 function onload(){
     //start a promise chain
     Promise.resolve()
@@ -70,7 +88,20 @@ function onload(){
                     '        </a>' + entry.content + '</li></ul>'
                    );
                 });
-                
+            })
+            .then(function(){
+                return ($.post('GetAllHashtag',{id : post._id}));
+            })
+            .then(function(hashtags){
+               console.log(hashtags); 
+                hashtags.forEach(function(test){
+                  console.log(test); 
+                   $(".feed-block:last-child .comment-list li:first-child").append(
+                    '      <li>' +
+                    '        <a class="feed-user" href="">' + $(".feed-block:last-child .comment-list li:first-child .feed-user").text() + '</a>'+
+                    '        </a>' + test.tag + '</li></ul>'
+                   );
+                });
             });
         });
     })
