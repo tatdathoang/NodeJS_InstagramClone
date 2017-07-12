@@ -1,0 +1,9 @@
+.vertical-align { margin-top:165px; }
+
+.login-container { background: #fff; border:1px solid #e6e6e6; margin-top: 66px; padding:30px; box-sizing: border-box;}
+.login-container:nth-child(2) { margin-top: 20px;}
+
+
+.logolink { float: none; margin:0 auto 30px; text-align: center;}
+
+.btn.btn-default { background: #3897f0; border-color: #3897f0; color: #fff; text-align: center; width: 100%;}
