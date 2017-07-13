@@ -28,7 +28,7 @@ Sarah Martinelli Benedetti - 7636905
               .then(function(auth){
                   if (auth.isValid){
                       $('#error').text = '';
-                      window.location.replace('login.html');
+                      window.location.replace('login');
                   } else {
                       $('#error').html(auth.message);
                       $('#email').html('');
@@ -77,7 +77,7 @@ Sarah Martinelli Benedetti - 7636905
                   <p id="error"></p>
                 </form>
               </div>
-              <a class="login-container col-md-12 pull-left">Already have account? Login here.</a>
+              <a href="login" class="login-container col-md-12 pull-left">Already have account? Login here.</a>
             </div>
           </div>
         </div>
