@@ -6,13 +6,13 @@ const hash = require('./utils/hash.js');
 module.exports.init = function(passport){
 	// Passport needs to be able to serialize and deserialize users to support persistent login sessions
     passport.serializeUser(function(user, callback) {
-        console.log('serializing user: ' + user.username);
+        console.log('serializing user: ' + user.email);
         callback(null, user._id);
     });
 
     passport.deserializeUser(function(id, callback) {
         User.findById(id, function(err, user) {
-            console.log('deserializing user: ' + user.username);
+            console.log('deserializing user: ' + user.email);
             callback(err, user);
         });
     });
