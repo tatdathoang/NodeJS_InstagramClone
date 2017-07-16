@@ -16,6 +16,7 @@ Sarah Martinelli Benedetti - 7636905
     <script>
       /*global $*/
       function handleJoinAttempt(){
+          event.preventDefault();
           var email = $('#email').val();
           var password = $('#password').val();
           var repeatPassword = $('#repeat_password').val();
@@ -51,18 +52,19 @@ Sarah Martinelli Benedetti - 7636905
       <div class="container">
         <div class="col-md-9 center-block vertical-align">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-4">
               <div class="row">
                 <img src="./img/login/celphone.png" alt="Iphones" class="img-responsive">
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-8">
               <div class="login-container clearfix">
                 <a href="http://www.instagram.com" class="logolink">
                   <img src="./img/logotext.svg" class="logotext" >
                   <p>Sign in</p>
                 </a>
                 <form action="">
+                  <p class="bg-warning" id="error"></p>
                   <div class="form-group">
                     <input type="email" class="form-control" id="email" placeholder="Email">
                   </div>
@@ -73,8 +75,8 @@ Sarah Martinelli Benedetti - 7636905
                   <div class="form-group">
                     <input type="password" class="form-control" id="repeat_password" placeholder="Repeat Password">
                   </div>
-                  <button type="submit" class="btn btn-default" onclick="handleJoinAttempt()">Submit</button>
-                  <p id="error"></p>
+                  <button class="btn btn-default" onclick="handleJoinAttempt()">Submit</button>
+                  
                 </form>
               </div>
               <a href="login" class="login-container col-md-12 pull-left">Already have account? Login here.</a>

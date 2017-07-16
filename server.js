@@ -63,19 +63,11 @@ router.get('/', function(req, res)
 });
 
 //tell the router how to handle a get request to the login page
-router.get('/posts', function(req, res)
-{
-  console.log('client requests posts');
-  //use sendfile to send our index.html file
-  res.sendfile(path.join(__dirname, 'client','posts.html'));//EDIT THIS
-});
-
-//tell the router how to handle a get request to the login page
 router.get('/login', function(req, res)
 {
   console.log('client requests login');
   //use sendfile to send our index.html file
-  res.sendfile(path.join(__dirname, 'client','login.html'));//EDIT THIS
+  res.sendfile(path.join(__dirname, 'client','signin.html'));//EDIT THIS
 });
 
 //tell the router how to handle a post request from the login page
@@ -112,7 +104,7 @@ router.post('/login', function(req, res, next)
 router.get('/join', function(req, res)
 {
   console.log('client requests join');
-  res.sendFile(path.join(__dirname, 'client/view', 'signin.html'));//EDIT THIS
+  res.sendFile(path.join(__dirname, 'client', 'signin.html'));//EDIT THIS
 });
 
 //tell the router how to handle a post request to the join page
@@ -205,7 +197,6 @@ router.get('/verifypassword', function(req, res)
       }
     })
 });
-
 
 //tell the router how to handle a post request to find all post
 router.post('/GetAllPosts', function(req, res)
