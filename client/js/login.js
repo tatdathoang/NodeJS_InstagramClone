@@ -1,5 +1,5 @@
   /*global $*/
-  function handleSigninAttempt(){
+  function handleLoginAttempt(){
       var email = $('#email').val();
       var password = $('#password').val();
       
