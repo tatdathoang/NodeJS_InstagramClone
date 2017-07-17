@@ -6,6 +6,5 @@ module.exports = mongoose.model('PasswordReset',
 {
    username: String, //name of the account
    password: String, //password of the account
-   email: String, //name of the account
    expires: Date 
 });

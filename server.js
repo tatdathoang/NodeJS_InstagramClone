@@ -62,14 +62,14 @@ router.get('/', function(req, res)
   res.sendfile(path.join(__dirname, 'client','signin.html'));//EDIT THIS PART
 });
 
+
 //tell the router how to handle a get request to the login page
 router.get('/posts', function(req, res)
 {
-  console.log('client requests post');
+  console.log('client requests posts');
   //use sendfile to send our index.html file
   res.sendfile(path.join(__dirname, 'client','posts.html'));//EDIT THIS
 });
-
 
 //tell the router how to handle a get request to the login page
 router.get('/login', function(req, res)
@@ -142,13 +142,15 @@ router.post('/join', function(req, res, next)
   })(req, res, next);
 });
 
-router.get('/passwordreset', (req, res) => {
+//tell the router how to handle a get request to the login page
+router.get('/passwordreset', function(req, res)
+{
   console.log('client requests passwordreset');
-  res.sendFile(path.join(__dirname, 'client', 'passwordreset.html'));
+  //use sendfile to send our index.html file
+  res.sendfile(path.join(__dirname, 'client','passwordreset.html'));//EDIT THIS
 });
 
-
-router.post('/passwordreset', (req, res) => 
+router.post('/passwordreset',function(req, res)
 {
     Promise.resolve()
     .then(function()
@@ -206,6 +208,7 @@ router.get('/verifypassword', function(req, res)
       }
     })
 });
+
 
 //tell the router how to handle a post request to find all post
 router.post('/GetAllPosts', function(req, res)
