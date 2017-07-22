@@ -93,3 +93,22 @@ function onload(){
         console.log(err);
     });
 }
+
+function uploadClick(){
+                //go get the data from the form
+                var form = new FormData($("#uploadForm")[0]);
+                //we can post this way as well as $.post
+                $.ajax({
+                        url: '/upload',
+                        method: "POST",
+                        dataType: 'json',
+                        //the form object is the data
+                        data: form,
+                        //we want to send it untouched, so this needs to be false
+                        processData: false,
+                        contentType: false,
+                        //add a message 
+                        success: function(result){},
+                        error: function(er){}
+                });            
+            }

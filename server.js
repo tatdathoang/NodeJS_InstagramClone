@@ -185,7 +185,7 @@ router.get('/verifypassword', function(req, res)
     Promise.resolve()
     .then(function()
     {
-      return PasswordReset.findOne({id: req.body.id});
+      return PasswordReset.findOne({id: req.query.id});
     })
     .then(function(pr)
     {
