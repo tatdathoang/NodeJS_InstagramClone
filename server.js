@@ -64,7 +64,7 @@ router.get('/', function(req, res)
 
 
 //tell the router how to handle a get request to the login page
-router.get('/posts', function(req, res)
+router.get('/posts',userAuth.isAuthenticated, function(req, res)
 {
   console.log('client requests posts');
   //use sendfile to send our index.html file

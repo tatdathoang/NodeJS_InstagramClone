@@ -6,4 +6,9 @@
 
 .logolink { float: none; margin:0 auto 30px; text-align: center;}
 
-.btn.btn-default { background: #3897f0; border-color: #3897f0; color: #fff; text-align: center; width: 100%;}
+.bg-danger p:not(:empty) { padding:10px;}
+
+.btn { text-align: center; width: 100%;}
+.btn.btn-blue { background: #3897f0; border-color: #3897f0; color: #fff; }
+.btn.btn-default { background: none; margin-top:15px;}
+

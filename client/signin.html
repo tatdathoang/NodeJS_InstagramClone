@@ -13,39 +13,6 @@ Sarah Martinelli Benedetti - 7636905
     <link rel="stylesheet" href="./css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/login.css">
-    <script>
-      /*global $*/
-      function handleJoinAttempt(){
-          event.preventDefault();
-          var email = $('#email').val();
-          var password = $('#password').val();
-          var repeatPassword = $('#repeat_password').val();
-          
-          if (email.length > 0 && password.length > 0 && repeatPassword.length > 0 && password == repeatPassword){
-              Promise.resolve()
-              .then(function(){
-                  return $.post('join', 'username=' + email  + '&password=' + password);
-              })
-              .then(function(auth){
-                  if (auth.isValid){
-                      $('#error').text = '';
-                      window.location.replace('login');
-                  } else {
-                      $('#error').html(auth.message);
-                      $('#email').html('');
-                      $('#password').html('');
-                      $('#repeat_password').html('');
-                  }
-              })
-              .catch(function(err){
-                  console.log(err);
-              })
-          } else {
-              $('#error').html('Please provide both username and password and ensure passwords match');
-          }
-      }
-
-  </script>
   </head>
   <body onload="">
     <main>
@@ -59,23 +26,25 @@ Sarah Martinelli Benedetti - 7636905
             </div>
             <div class="col-md-6 col-sm-8">
               <div class="login-container clearfix">
-                <a href="http://www.instagram.com" class="logolink">
+                <a href="/" class="logolink">
                   <img src="./img/logotext.svg" class="logotext" >
                   <p>Sign in</p>
                 </a>
-                <form action="">
-                  <p class="bg-warning" id="error"></p>
+                <div class="bg-danger">
+                  <p id="error"></p>
+                </div>
+                
+                <form action="" id="form" data-location="login" data-formtype="join">
                   <div class="form-group">
-                    <input type="email" class="form-control" id="email" placeholder="Email">
+                    <input type="email" class="form-control" id="email" placeholder="Email" required>
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control" id="password" placeholder="Password">
-                    
+                    <input type="password" class="form-control" id="password" placeholder="Password" required>
                   </div>
                   <div class="form-group">
                     <input type="password" class="form-control" id="repeat_password" placeholder="Repeat Password">
                   </div>
-                  <button class="btn btn-default" onclick="handleJoinAttempt()">Submit</button>
+                  <button class="btn btn-blue" onclick="handleLoginAttempt()">Submit</button>
                   
                 </form>
               </div>
@@ -87,6 +56,6 @@ Sarah Martinelli Benedetti - 7636905
     </main>
     
     <script src="/js/jquery.min.js"></script>
-   
+    <script src="/js/login.js"></script>
   </body>
 </html>
