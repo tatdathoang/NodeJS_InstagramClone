@@ -31,6 +31,7 @@ module.exports.send = function(to, subject, text)
         {
             return console.log(error);
         }
-        console.log('Message %s sent: %s', info.messageId, info.response);
+        //console.log('Message %s sent: %s', info.messageId, info.response);
+        console.log('Reset password email sent');
     });
 }

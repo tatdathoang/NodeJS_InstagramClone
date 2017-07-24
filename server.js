@@ -38,9 +38,11 @@ var mongoSessionStore = new mongoSession({
 
 //tell the router (ie. express) where to find static files
 router.use(express.static(path.resolve(__dirname, 'client')));
+
 //tell the router to parse JSON data for us and put it into req.body
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
+
 //add session support
 router.use(session({
   secret: process.env.SESSION_SECRET || 'mySecretKey', 
@@ -54,24 +56,15 @@ router.use(passport.initialize());
 router.use(passport.session());
 userAuth.init(passport);
 
-//tell the router how to handle a get request to the root 
+//ROOT
 router.get('/', function(req, res)
 {
   console.log('client requests root');
   //use sendfile to send our signin.html file
-  res.sendfile(path.join(__dirname, 'client','signin.html'));//EDIT THIS PART
+  res.sendfile(path.join(__dirname, 'client','signin.html'));
 });
 
-
-//tell the router how to handle a get request to the login page
-router.get('/posts',userAuth.isAuthenticated, function(req, res)
-{
-  console.log('client requests posts');
-  //use sendfile to send our index.html file
-  res.sendfile(path.join(__dirname, 'client','posts.html'));//EDIT THIS
-});
-
-//tell the router how to handle a get request to the login page
+//get LOGIN
 router.get('/login', function(req, res)
 {
   console.log('client requests login');
@@ -79,7 +72,7 @@ router.get('/login', function(req, res)
   res.sendfile(path.join(__dirname, 'client','login.html'));//EDIT THIS
 });
 
-//tell the router how to handle a post request from the login page
+//post LOGIN
 router.post('/login', function(req, res, next) 
 {
   //tell passport to attempt to authenticate the login
@@ -109,14 +102,14 @@ router.post('/login', function(req, res, next)
   })(req, res, next);
 });
 
-//tell the router how to handle a get request to the join page
+//get JOIN
 router.get('/join', function(req, res)
 {
   console.log('client requests join');
   res.sendFile(path.join(__dirname, 'client', 'signin.html'));//EDIT THIS
 });
 
-//tell the router how to handle a post request to the join page
+//post JOIN
 router.post('/join', function(req, res, next) 
 {
   passport.authenticate('join', function(err, user, info)
@@ -142,14 +135,15 @@ router.post('/join', function(req, res, next)
   })(req, res, next);
 });
 
-//tell the router how to handle a get request to the login page
+//get PASSWORD RESET
 router.get('/passwordreset', function(req, res)
 {
   console.log('client requests passwordreset');
   //use sendfile to send our index.html file
-  res.sendfile(path.join(__dirname, 'client','passwordreset.html'));//EDIT THIS
+  res.sendfile(path.join(__dirname, 'client','passwordreset.html'));
 });
 
+//post PASSWORD RESET
 router.post('/passwordreset',function(req, res)
 {
     Promise.resolve()
@@ -163,7 +157,7 @@ router.post('/passwordreset',function(req, res)
       if (user)
       {
         var pr = new PasswordReset();
-        pr.userId = user.id;
+        pr.userID = user.id;
         pr.password = hash.createHash(req.body.password);
         pr.expires = new Date((new Date()).getTime() + (20 * 60 * 1000));
         pr.save()
@@ -171,13 +165,16 @@ router.post('/passwordreset',function(req, res)
         {
           if (pr)
           {
-            email.send(req.body.email, 'password reset', 'https://instagram-tatdathoang.c9users.io/verifypassword?id=' + pr.id);
+            email.send(req.body.email, 'Reset your password at Instagram', 'https://instagram-tatdathoang.c9users.io/verifypassword?id=' + pr.id);
+            res.redirect('/login');
           }
         });
       }
     })
+    
 });
 
+//get VERIFY PASSWORD
 router.get('/verifypassword', function(req, res)
 {
     var password;
@@ -185,18 +182,18 @@ router.get('/verifypassword', function(req, res)
     Promise.resolve()
     .then(function()
     {
-      return PasswordReset.findOne({id: req.query.id});
+      return PasswordReset.findOne({id: req.body.id});
     })
     .then(function(pr)
     {
       if (pr)
       {
-        if (pr.expires > new Date())
-        {
+        //if (pr.expires > new Date())
+        //{
           password = pr.password;
           //see if there's a user with this email
-          return User.findOne({id : pr.userId});
-        }
+          return User.findById({_id:pr.userID});
+        //}
       }
     })
     .then(function(user)
@@ -204,13 +201,22 @@ router.get('/verifypassword', function(req, res)
       if (user)
       {
         user.password = password;
-        return user.save();
+        user.save();
+        console.log("Changed password for " + user.email);
       }
     })
+  res.redirect('/login');
 });
 
+//get POST page
+router.get('/posts',userAuth.isAuthenticated, function(req, res)
+{
+  console.log('client requests posts');
+  //use sendfile to send our index.html file
+  res.sendfile(path.join(__dirname, 'client','posts.html'));
+});
 
-//tell the router how to handle a post request to find all post
+//GET ALL POST
 router.post('/GetAllPosts', function(req, res)
 {
   //print the log
@@ -224,7 +230,7 @@ router.post('/GetAllPosts', function(req, res)
   })
 });
   
-//tell the router how to handle a post request to find all comments
+//GET ALL COMMENT
 router.post('/GetAllComments', function(req, res)
 {
   //print the log
@@ -240,7 +246,7 @@ router.post('/GetAllComments', function(req, res)
   })
 });
   
-//tell the router how to handle a post request to find all hashtags
+//GET ALL HASHTAG
 router.post('/GetAllHashtag', function(req, res)
 {
   //print the log
@@ -255,8 +261,8 @@ router.post('/GetAllHashtag', function(req, res)
     });
   })
 });
-    
-//tell the router how to handle a post request to find user details
+
+//GET USER DETAIL
 router.post('/GetUserDetails', function(req, res)
 {
   //print the log
