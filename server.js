@@ -5,6 +5,7 @@ var path = require('path');
 //express related
 var express = require('express');
 const bodyParser = require('body-parser');
+const Guid = require('guid');
 
 //session
 const session = require('express-session');  
@@ -19,6 +20,7 @@ var Post = require('./models/Post.js');
 var Comment = require('./models/Comment.js');
 var Hashtag = require('./models/Hashtag.js');
 var User = require('./models/User.js');
+var Like = require('./models/like.js');
 var PasswordReset = require('./models/PasswordReset.js');
 
 //sendmail
@@ -56,7 +58,7 @@ router.use(passport.initialize());
 router.use(passport.session());
 userAuth.init(passport);
 
-//ROOT
+//request ROOT
 router.get('/', function(req, res)
 {
   console.log('client requests root');
@@ -64,7 +66,7 @@ router.get('/', function(req, res)
   res.sendfile(path.join(__dirname, 'client','signin.html'));
 });
 
-//get LOGIN
+//request LOGIN
 router.get('/login', function(req, res)
 {
   console.log('client requests login');
@@ -72,7 +74,7 @@ router.get('/login', function(req, res)
   res.sendfile(path.join(__dirname, 'client','login.html'));//EDIT THIS
 });
 
-//post LOGIN
+//submit LOGIN
 router.post('/login', function(req, res, next) 
 {
   //tell passport to attempt to authenticate the login
@@ -102,14 +104,14 @@ router.post('/login', function(req, res, next)
   })(req, res, next);
 });
 
-//get JOIN
+//request JOIN
 router.get('/join', function(req, res)
 {
   console.log('client requests join');
   res.sendFile(path.join(__dirname, 'client', 'signin.html'));//EDIT THIS
 });
 
-//post JOIN
+//submit JOIN
 router.post('/join', function(req, res, next) 
 {
   passport.authenticate('join', function(err, user, info)
@@ -135,7 +137,7 @@ router.post('/join', function(req, res, next)
   })(req, res, next);
 });
 
-//get PASSWORD RESET
+//request PASSWORD RESET
 router.get('/passwordreset', function(req, res)
 {
   console.log('client requests passwordreset');
@@ -143,7 +145,7 @@ router.get('/passwordreset', function(req, res)
   res.sendfile(path.join(__dirname, 'client','passwordreset.html'));
 });
 
-//post PASSWORD RESET
+//submit PASSWORD RESET
 router.post('/passwordreset',function(req, res)
 {
     Promise.resolve()
@@ -174,7 +176,7 @@ router.post('/passwordreset',function(req, res)
     
 });
 
-//get VERIFY PASSWORD
+//request VERIFY PASSWORD
 router.get('/verifypassword', function(req, res)
 {
     var password;
@@ -208,7 +210,7 @@ router.get('/verifypassword', function(req, res)
   res.redirect('/login');
 });
 
-//get POST page
+//request POST page
 router.get('/posts',userAuth.isAuthenticated, function(req, res)
 {
   console.log('client requests posts');
@@ -216,7 +218,7 @@ router.get('/posts',userAuth.isAuthenticated, function(req, res)
   res.sendfile(path.join(__dirname, 'client','posts.html'));
 });
 
-//GET ALL POST
+//request ALL POST
 router.post('/GetAllPosts', function(req, res)
 {
   //print the log
@@ -230,7 +232,7 @@ router.post('/GetAllPosts', function(req, res)
   })
 });
   
-//GET ALL COMMENT
+//request ALL COMMENT of a post
 router.post('/GetAllComments', function(req, res)
 {
   //print the log
@@ -246,7 +248,7 @@ router.post('/GetAllComments', function(req, res)
   })
 });
   
-//GET ALL HASHTAG
+//request ALL HASHTAG of a post
 router.post('/GetAllHashtag', function(req, res)
 {
   //print the log
@@ -262,7 +264,7 @@ router.post('/GetAllHashtag', function(req, res)
   })
 });
 
-//GET USER DETAIL
+//request DETAIL of an user
 router.post('/GetUserDetails', function(req, res)
 {
   //print the log
@@ -273,6 +275,125 @@ router.post('/GetUserDetails', function(req, res)
     //send them to the client in JSON format
     res.json(paths);
     });
+});
+
+//request to INCREMENT LIKE
+router.post('/incrLike', userAuth.isAuthenticated, function(req, res)
+{
+  console.log('increment like for ' + req.body.id + ' by user ' + req.user.email);
+
+  Like.findOne({userId: req.user.id, postId: req.body.id})
+  .then(function(like)
+  {
+    if (!like)
+    {
+      //go get the post record
+      Post.findById(req.body.id)
+      .then(function(post)
+      {
+        //increment the like count
+        post.likeCount++;
+        //save the record back to the database
+        return post.save(post);
+      })
+      .then(function(post)
+      {
+        var like = new Like();
+        like.userId = req.user.id;
+        like.postId = req.body.id;
+        like.save();
+        
+        //a successful save returns back the updated object
+        res.json({id: req.body.id, count: post.likeCount});  
+      })
+    } 
+    else 
+    {
+        res.json({id: req.body.id, count: -1});  
+    }
+  })
+  .catch(function(err)
+  {
+    console.log(err);
+  })
+});
+
+//request to UPLOAD
+router.post('/upload', userAuth.isAuthenticated, function(req, res) 
+{
+  var response = {success: false, message: ''};
+  
+  if (req.files)
+  {
+    // The name of the input field is used to retrieve the uploaded file 
+    var userPhoto = req.files.userPhoto;
+    //invent a unique file name so no conflicts with any other files
+    var guid = Guid.create();
+    //figure out what extension to apply to the file
+    var extension = '';
+    switch(userPhoto.mimetype)
+    {
+      case 'image/jpeg':
+        extension = '.jpg';
+        break;
+      case 'image/png':
+        extension = '.png';
+        break;
+      case 'image/bmp':
+        extension = '.bmp';
+        break;
+      case 'image/gif':
+        extension = '.gif';
+        break;
+    }
+    
+    //if we have an extension, it is a file type we will accept
+    if (extension)
+    {
+      //construct the file name
+      var filename = guid + extension;
+      // Use the mv() method to place the file somewhere on your server 
+      userPhoto.mv('./client/img/' + filename, function(err) 
+      {
+        //if no error
+        if (!err)
+        {
+          //create a post for this image
+          var post = new Post();
+          post.userID = req.user.id;
+          post.imageURL = './img/' + filename;
+          post.likeCount = 0;
+          post.commentCount = 0;
+          post.feedbackCount = 0;
+          post.caption='This is a new image';
+          post.datePosted= new Date();
+          
+          //save it
+          post.save()
+          
+          .then(function()
+          {
+            res.json({success: true, message: 'all good'});            
+          })
+        } 
+        else 
+        {
+          response.message = 'internal error';
+          res.json(response);
+        }
+      });
+    } 
+    else 
+    {
+      response.message = 'unsupported file type';
+      res.json(response);
+    }
+  } 
+  else 
+  {
+    response.message = 'no files';
+    res.json(response);
+  }
 });
 
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
