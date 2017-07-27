@@ -20,7 +20,7 @@ var Post = require('./models/Post.js');
 var Comment = require('./models/Comment.js');
 var Hashtag = require('./models/Hashtag.js');
 var User = require('./models/User.js');
-var Like = require('./models/like.js');
+var Like = require('./models/Like.js');
 var PasswordReset = require('./models/PasswordReset.js');
 
 //sendmail
