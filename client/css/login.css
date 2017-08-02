@@ -4,7 +4,7 @@
 .login-container:nth-child(2) { margin-top: 20px;}
 
 
-.logolink { float: none; margin:0 auto 30px; text-align: center;}
+.logolink { float: none; margin:0 auto 30px; text-align: center; display:block;}
 
 .bg-danger p:not(:empty) { padding:10px;}
 
