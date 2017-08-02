@@ -14,39 +14,30 @@ Sarah Martinelli Benedetti - 7636905
     <link rel="stylesheet" href="./css/main.css">
   </head>
   <body onload="onload();">
-    <header class="topmenu">
-       <div class="container">
-          <a href="http://www.instagram.com" class="logolink">
-            <i class="fa fa-instagram fa-4x logoicon"></i>
-            <img src="./img/logotext.svg" class="logotext" >
+    <header class="">
+      <div class="container special-padding">
+          <a href="http://www.instagram.com" class="logo pull-left">
+            <i class="fa fa-instagram logo-icon"></i>
+            <img src="./img/logotext.svg" class="logo-text" >
           </a>
-          <img src="./img/Search.png" class="searchbtn"></img>
           <div class="pull-right">
+            <!-- Trigger the modal with a button -->
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add a Picture</button>
+         
             <a href="." class="fa fa-compass fa-2x rightmenu"></a>
             <a href="." class="fa fa-heart-o fa-2x rightmenu"></a>
             <a href="." class="fa fa-user fa-2x rightmenu"></a>  
           </div>
-          
-       </div>
-       <!--header
-       <header>
-         <div class topmenu <-- css: backgroun grey, height 100px
-           <a link to the mian site. Display logo and the text logo
-           <img display search textbox
-           <font awesome for 3 other icon
-           
-       -->
+      </div>
     </header>
-    <main>
+    <main class="main-feed">
       <div class="container">
         <div class="col-md-7 center-block" id="feed-container">
           
         </div>
       </div>
       <div class="container">
-           <!-- Trigger the modal with a button -->
-           <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add a Picture</button>
-         
+           
            <!-- Modal -->
            <div class="modal fade" id="myModal" role="dialog">
              <div class="modal-dialog">
@@ -74,6 +65,7 @@ Sarah Martinelli Benedetti - 7636905
     </main>
     
     <script src="/js/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="/js/feed.js"></script>
   </body>
 </html>

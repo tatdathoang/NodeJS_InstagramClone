@@ -1,57 +1,20 @@
+
 .center-block { float:none !important; }
+.special-padding { padding:0 40px;}
 
-
+a,
+a:hover { text-decoration: none !important; }
 body { background:#fafafa; }
 
-.topmenu{
-    background-color:white;
-    /* The line height will help to make things align in the middle of the vertical axis */
-    line-height: 76px;
-    /*padding-bottom:30px;*/
-    margin-bottom: 30px;
-}
-.logolink{
-    font-size: medium;
-    display:block;
-    float:left;
-}
+header { background:white url(../img/Search.png) center no-repeat; line-height: 76px; margin-bottom: 30px; background-size:12%; border-bottom:1px solid rgba(0,0,0,.0975); position:fixed; left:0; width:100%; top:0; z-index:99; }
+.logo { font-size: medium; display:block; }
+.logo-icon { color:#000; vertical-align: middle; border-right: 1px solid black; padding-right:17px; margin-top: -3px; font-size:35px; }
+.logo-text { height: 35px; margin: 5px 0 0 10px; }
 
-.logolink:hover {
-    text-decoration: none;
-}
 
-.logoicon {
-    color:#000;
-    vertical-align: middle;
-    border-right: 1px solid black;
-    padding-right:17px;
-    margin-top: 2px;
-}
-
-.logotext {
-     width: 150px;
-    height: 50px;
-    margin: 10px 0 0 10px;
-}
-
-.searchbtn{
-    width: 215px;
-    margin-left:20%;
-}
-
-.rightmenu{
-    /* But the float will stop the icons from doing that. If you want to make things align to the middle, is better to remove the float and force the icons
-    go to the right using margins.
-    */
-    margin-left:50px;
-    color:black;
+.rightmenu{ margin-left:20px; color:black; vertical-align: middle; }
     
-    /*float:right;*/
-}
-.rightmenu:hover {
-    text-decoration: none;
-    color:black;
-}
+.main-feed { padding-top:100px;}
 
 .feed-block { background:#fff; display:block; margin:0 auto 60px; overflow:hidden; float: none !important; border-radius:3px; border:1px solid #e6e6e6; }
 
@@ -75,7 +38,8 @@ body { background:#fafafa; }
 
 .feed-time time { color:#999; font-size:15px;}
 
-.feed-image { display:block; float:left; } 
+.feed-image { display:block; float:left; width: 100%; } 
+.feed-image img { min-width:633px }
 .feed-body { padding: 0 24px; clear:both; overflow:hidden; }
 
 .likes { margin-bottom:0; margin-top:20px; font-weight: 600; display: block; }
@@ -89,3 +53,11 @@ body { background:#fafafa; }
 
 
 
+.logolink:hover { text-decoration: none; }
+.rightmenu:hover { text-decoration: none; color:black; }
+
+@media (max-width: 1024px) {
+    header { background-image:none; }
+    .rightmenu { display: none;}
+    .feed-image img { min-width:auto; }
+}
