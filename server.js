@@ -6,6 +6,7 @@ var path = require('path');
 var express = require('express');
 const bodyParser = require('body-parser');
 const Guid = require('guid');
+const fileUpload = require('express-fileupload');
 
 //session
 const session = require('express-session');  
@@ -37,6 +38,8 @@ var mongoSessionStore = new mongoSession({
     uri: dbUrl,
     collection: 'sessions'
 });
+
+router.use(fileUpload());
 
 //tell the router (ie. express) where to find static files
 router.use(express.static(path.resolve(__dirname, 'client')));
@@ -163,6 +166,7 @@ router.post('/passwordreset',function(req, res)
         pr.password = hash.createHash(req.body.password);
         pr.expires = new Date((new Date()).getTime() + (20 * 60 * 1000));
         pr.save()
+        
         .then(function(pr)
         {
           if (pr)
@@ -207,7 +211,7 @@ router.get('/verifypassword', function(req, res)
         console.log("Changed password for " + user.email);
       }
     })
-  res.redirect('/login');
+  //res.redirect('/login');
 });
 
 //request POST page
