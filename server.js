@@ -1,3 +1,4 @@
+/* global Data*/
 //require statements -- this adds external modules from node_modules or our own defined modules
 var http = require('http');
 var path = require('path');
@@ -219,7 +220,7 @@ router.get('/posts',userAuth.isAuthenticated, function(req, res)
 {
   console.log('client requests posts');
   //use sendfile to send our index.html file
-  res.sendfile(path.join(__dirname, 'client','posts.html'));
+  res.sendfile(path.join(__dirname, 'client','posts.html'),{ username: req.user.username });
 });
 
 //request ALL POST
@@ -357,6 +358,8 @@ router.post('/upload', userAuth.isAuthenticated, function(req, res)
       //construct the file name
       var filename = guid + extension;
       // Use the mv() method to place the file somewhere on your server 
+      var temporaryData = new Date();
+      
       userPhoto.mv('./client/img/' + filename, function(err) 
       {
         //if no error
@@ -370,7 +373,7 @@ router.post('/upload', userAuth.isAuthenticated, function(req, res)
           post.commentCount = 0;
           post.feedbackCount = 0;
           post.caption='This is a new image';
-          post.datePosted= new Date();
+          post.datePosted= temporaryData.toDateString();
           
           //save it
           post.save()

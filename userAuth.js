@@ -82,7 +82,9 @@ function handleSignupAttempt(email, password, cb){
             Promise.resolve()
             .then(function(){
                 user = new User();
+                user.username = email.split("@")[0];
                 user.email = email;
+                user.profilePicture= "./img/glyphicons-halflings.png";
                 user.password = hash.createHash(password);
                 return user.save();
             })
