@@ -146,7 +146,11 @@ function uploadClick(){
             processData: false,
             contentType: false,
             //add a message 
-            success: function(result){},
+            success: function(result){
+              setTimeout(function(){
+                window.location.reload(true);
+              },1000);
+            },
             error: function(er){}
     });            
 }

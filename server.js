@@ -210,9 +210,10 @@ router.get('/verifypassword', function(req, res)
         user.password = password;
         user.save();
         console.log("Changed password for " + user.email);
+        res.redirect('/login');
       }
     })
-  //res.redirect('/login');
+  res.redirect('/login');
 });
 
 //request POST page
