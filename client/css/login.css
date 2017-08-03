@@ -1,5 +1,8 @@
 .vertical-align { margin-top:165px; }
 
+.animation { position: relative; }
+.animation-gif { position: absolute; top:16%; right:21.70%;}
+
 .login-container { background: #fff; border:1px solid #e6e6e6; margin-top: 66px; padding:30px; box-sizing: border-box;}
 .login-container:nth-child(2) { margin-top: 20px;}
 
