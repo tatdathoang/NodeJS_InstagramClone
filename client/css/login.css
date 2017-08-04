@@ -1,4 +1,11 @@
-.vertical-align { margin-top:165px; }
+body:before { height:51px; display: block; width:100%; background: #bd3381; /* Old browsers */
+background: -moz-linear-gradient(left, #bd3381 0%, #eb5344 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(left, #bd3381 0%,#eb5344 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to right, #bd3381 0%,#eb5344 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bd3381', endColorstr='#eb5344',GradientType=1 ); /* IE6-9 */
+    
+}
+.vertical-align { margin-top:130px; }
 
 .animation { position: relative; }
 .animation-gif { position: absolute; top:16%; right:21.70%;}
@@ -7,7 +14,8 @@
 .login-container:nth-child(2) { margin-top: 20px;}
 
 
-.logolink { float: none; margin:0 auto 30px; text-align: center; display:block;}
+.logolink { float: none; margin:0 auto 15px; text-align: center; display:block;}
+.description-page {margin-bottom: 30px;}
 
 .bg-danger p:not(:empty) { padding:10px;}
 
@@ -15,3 +23,7 @@
 .btn.btn-blue { background: #3897f0; border-color: #3897f0; color: #fff; }
 .btn.btn-default { background: none; margin-top:15px;}
 
+@media (max-width: 1024px) {
+    .animation img:first-child { right:13.6%; width:53%; }
+    .vertical-align { margin-top:35px; }
+}
