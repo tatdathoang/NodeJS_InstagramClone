@@ -172,7 +172,7 @@ router.post('/passwordreset',function(req, res)
         {
           if (pr)
           {
-            email.send(req.body.email, 'Reset your password at Instagram', 'https://instagram-tatdathoang.c9users.io/verifypassword?id=' + pr.id);
+            email.send(req.body.email, 'Reset your password at Instagram', pr.id);
             res.redirect('/login');
           }
         });
