@@ -52,6 +52,9 @@ header { background:white url(../img/Search.png) center no-repeat; line-height: 
 .add-comment-input { border:none; width:100%;}
 
 
+.btn.btn-blue { background: #3897f0; border-color: #3897f0; color: #fff; }
+.btn.btn-default { background: none; margin-top:15px;}
+
 
 .logolink:hover { text-decoration: none; }
 .rightmenu:hover { text-decoration: none; color:black; }

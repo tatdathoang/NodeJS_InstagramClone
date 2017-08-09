@@ -20,8 +20,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bd3381', end
 .bg-danger p:not(:empty) { padding:10px;}
 
 .btn { text-align: center; width: 100%;}
-.btn.btn-blue { background: #3897f0; border-color: #3897f0; color: #fff; }
-.btn.btn-default { background: none; margin-top:15px;}
 
 @media (max-width: 1024px) {
     .animation img:first-child { right:13.6%; width:53%; }
